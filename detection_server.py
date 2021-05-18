@@ -10,12 +10,12 @@ import json
 from multiprocessing import Process, Queue, Lock
 
 device = 'cpu'
-conf_thres = 0.25
-iou_thres = 0.45
+conf_thres = 0.1
+iou_thres = 0.2
 classes = None
 agnostic_nms = False
 image_size = 640
-model_path = '/Users/xutianshuo/code/museum.pt'
+model_path = 'museum.pt'
 
 
 def img_preprocess(np_img, stride):

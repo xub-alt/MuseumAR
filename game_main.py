@@ -319,12 +319,12 @@ def game(info_q):
     frame_blur = None
 
     # screen flag
-    screen_1_flag = True
+    screen_1_flag = False
     screen_2_flag = False
     screen_3_flag = False
     screen_4_flag = False
 
-    screen_5_flag = False   # screen_5 is for real time AR
+    screen_5_flag = True   # screen_5 is for real time AR
 
     route1.halls = [[1], [2, 3]]
     route2.halls = [[5, 6], [4]]
@@ -486,13 +486,15 @@ def game(info_q):
                     danmu_button.show_flag = True
                 if state.state[5]:
                     paint_flag = True
-                    music_jieshuo = True
-                    music_play = True
-                    music_flag = False
+                    if not music_jieshuo:
+                        music_jieshuo = True
+                        music_play = True
+                        music_flag = False
                 if state.state[6]:
-                    music_pipa = True
-                    music_play = True
-                    music_flag = False
+                    if not music_pipa:
+                        music_pipa = True
+                        music_play = True
+                        music_flag = False
 
             # ------------ 场景一：接待 -------------
             if screen_1_flag:
