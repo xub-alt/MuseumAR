@@ -309,12 +309,12 @@ def game(info_q):
     frame_blur = None
 
     # screen flag
-    screen_1_flag = False
+    screen_1_flag = True
     screen_2_flag = False
     screen_3_flag = False
     screen_4_flag = False
 
-    screen_5_flag = True   # screen_5 is for real time AR
+    screen_5_flag = False   # screen_5 is for real time AR
 
     route1.halls = [[1], [2, 3]]
     route2.halls = [[5, 6], [4]]
