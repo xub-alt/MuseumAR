@@ -12,8 +12,6 @@ import socket  # 导入 socket 模块，使用socket将摄像头传输到服务�
 import numpy as np
 import json
 
-GLOBAL_QUIT_FLAG = False
-
 
 # 场景
 def game(info_q):
@@ -434,7 +432,6 @@ def game(info_q):
             flowers = []
 
         if FINAL_QUIT and time.time() - q0 >= QUIT_TIME:
-            GLOBAL_QUIT_FLAG = True
             exit()
 
         if QUIT_FLAG:  # ready to kill the program
