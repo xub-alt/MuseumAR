@@ -910,6 +910,7 @@ def game(info_q):
                 pygame.mixer.music.load('lib/lib_music/pipa.wav')
             music_pipa_load = True
             music_jieshuo_load = False
+
         elif music_jieshuo:
             if not music_jieshuo_load:
                 pygame.mixer.music.load('lib/lib_music/paint_jieshuo.wav')
