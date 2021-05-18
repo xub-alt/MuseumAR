@@ -171,6 +171,7 @@ class Butterfly:
         self.img = pygame.image.load(path)
         self.scale = scale
         self.img = pygame.transform.scale(self.img, scale)
+        self.img.set_alpha(200)
         self.pos_start = pos_start
         self.pos = pos_start
 

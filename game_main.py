@@ -12,6 +12,8 @@ import socket  # 导入 socket 模块，使用socket将摄像头传输到服务�
 import numpy as np
 import json
 
+CAP = 1
+
 
 # 场景
 def game(info_q):
@@ -28,7 +30,9 @@ def game(info_q):
     music_jieshuo = False
     music_jieshuo_load = False
 
-    cap = cv.VideoCapture(0)
+    cap = cv.VideoCapture(CAP)
+    ret, frame = cap.read()
+    cap_h, cap_w, _ = frame.shape
     SCREEN_SIZE = (2560, 1600)
     print(SCREEN_SIZE)
     # relative images
@@ -196,7 +200,7 @@ def game(info_q):
     hu_dong = Hudong('lib/lib_img/hudong1.png')
 
     state = State()  # 目标检测状态类
-    hand = Hand('lib/lib_img/hand.png', 'lib/lib_img/hand.png', (SCREEN_SIZE[0] / 1280, SCREEN_SIZE[1] / 960))  # 创建手类
+    hand = Hand('lib/lib_img/hand.png', 'lib/lib_img/hand.png', (SCREEN_SIZE[0] / cap_w, SCREEN_SIZE[1] / cap_h))  # 创建手类
 
     # 弹幕滚动
     danmu_list = DanMuList(SCREEN_SIZE[0]//2-700, SCREEN_SIZE[0]//2+700, SCREEN_SIZE[1]//2-500, SCREEN_SIZE[1]//2+500)
@@ -230,6 +234,8 @@ def game(info_q):
     rate = SCREEN_SIZE[0]*0.9/paint.get_width()
     paint_scale = (int(paint.get_width()*rate), int(paint.get_height()*rate))
     paint = pygame.transform.scale(paint, paint_scale)
+    paint.set_alpha(200)
+
     paint_pos = (int(SCREEN_SIZE[0]*0.05), int(SCREEN_SIZE[1]*0.35))
     butterfly = Butterfly('lib/lib_img/butterfly.png', (200, 200), (1000, 600),
                           font, MYRED, 'lib/lib_img/red_arrow.png')
@@ -313,12 +319,12 @@ def game(info_q):
     frame_blur = None
 
     # screen flag
-    screen_1_flag = True
+    screen_1_flag = False
     screen_2_flag = False
     screen_3_flag = False
     screen_4_flag = False
 
-    screen_5_flag = False   # screen_5 is for real time AR
+    screen_5_flag = True   # screen_5 is for real time AR
 
     route1.halls = [[1], [2, 3]]
     route2.halls = [[5, 6], [4]]
@@ -948,7 +954,7 @@ def send_img_process(info_q):
     # addr = ('192.168.43.227', 8000)
     sock.connect(addr)
 
-    cap = cv.VideoCapture(0)
+    cap = cv.VideoCapture(CAP)
     while True:
         ret, frame = cap.read()
         frame = cv.flip(frame, 1)
