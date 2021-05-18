@@ -7,15 +7,14 @@ from utils.models.experimental import attempt_load
 from yolo_utils.general import non_max_suppression, scale_coords
 from yolo_utils.datasets import letterbox
 import json
-from multiprocessing import Process, Queue, Lock
 
 device = 'cpu'
-conf_thres = 0.1
-iou_thres = 0.2
+conf_thres = 0.3
+iou_thres = 0.45
 classes = None
 agnostic_nms = False
 image_size = 640
-model_path = 'museum.pt'
+model_path = 'last.pt'
 
 
 def img_preprocess(np_img, stride):
