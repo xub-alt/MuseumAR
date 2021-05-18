@@ -484,6 +484,15 @@ def game(info_q):
                     hand.show_hand = False
                 if state.state[2]:
                     danmu_button.show_flag = True
+                if state.state[5]:
+                    paint_flag = True
+                    music_jieshuo = True
+                    music_play = True
+                    music_flag = False
+                if state.state[6]:
+                    music_pipa = True
+                    music_play = True
+                    music_flag = False
 
             # ------------ 场景一：接待 -------------
             if screen_1_flag:

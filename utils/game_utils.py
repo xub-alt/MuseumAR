@@ -373,7 +373,7 @@ class Hand:
 
 class State:
     def __init__(self):
-        self.name = ['cloth', 'sword', 'bottle', 'hand', 'stone']
+        self.name = ['cloth', 'sword', 'bottle', 'hand', 'stone', 'paint', 'pipa']
         self.quant = len(self.name)  # 一共有几个状态量
         self.state = [False for i in range(self.quant)]
 
