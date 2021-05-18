@@ -215,10 +215,11 @@ def game(info_q):
     # jietu button
     jietu_button = ImgButton('lib/lib_img/jietu.png', 'lib/lib_img/jietu.png', (200, 200),
                              (SCREEN_SIZE[0]-210, SCREEN_SIZE[1]//2-600))
+    jietu_button.press_space = 2  # 每次截图间隔2s
     jietu_img = None
-    jietu_space_time = 2  # 每次截图间隔2s
-    jietu_time = 0
     jietu_flag = False
+    jietu_time = 0
+    jietu_path = 'screenshots/'
     share = pygame.image.load('lib/lib_img/share.jpeg')
     share_pos = (int(SCREEN_SIZE[0]-share.get_width())//2, SCREEN_SIZE[1]-400)
 
@@ -874,7 +875,22 @@ def game(info_q):
 
         jietu_button.show(screen)
         if jietu_button.in_button(pygame.mouse.get_pos()) and mouse_down and \
-            time.time()-
+                time.time()-jietu_button.time > jietu_button.press_space:
+            now_time = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+            path = jietu_path+now_time+'.png'
+            pygame.image.save(screen, path)
+            jietu_img = pygame.transform.scale(pygame.image.load(path),
+                                               (int(SCREEN_SIZE[0]*0.7), int(SCREEN_SIZE[1]*0.7)))
+            jietu_flag = True
+            jietu_time = time.time()
+            jietu_button.time = time.time()
+
+        if jietu_flag:
+            if time.time()-jietu_time < jietu_button.press_space:
+                screen.blit(jietu_img, (int(SCREEN_SIZE[0]*0.15), int(SCREEN_SIZE[1]*0.05)))
+                screen.blit(share, share_pos)
+            else:
+                jietu_flag = False
 
         # play music
         if music_flag:
