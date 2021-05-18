@@ -865,6 +865,17 @@ def game(info_q):
         if danmu_flag:
             danmu_list.show(screen)
 
+        flower_button.show(screen)
+        if flower_button.in_button(pygame.mouse.get_pos()) and mouse_down and \
+                time.time() - flower_button.time > flower_button.press_space:
+            flower_button.press_flag = not flower_button.press_flag
+            flower_start_lock = not flower_start_lock
+            flower_button.time = time.time()
+
+        jietu_button.show(screen)
+        if jietu_button.in_button(pygame.mouse.get_pos()) and mouse_down and \
+            time.time()-
+
         # play music
         if music_flag:
             pygame.mixer.music.play()
