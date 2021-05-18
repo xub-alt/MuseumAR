@@ -208,6 +208,20 @@ def game(info_q):
                                (SCREEN_SIZE[0]-210, SCREEN_SIZE[1]//2+300))
     danmu_flag = False
 
+    # flower button
+    flower_button = ImgButton('lib/lib_img/123.png', 'lib/lib_img/123-2.png', (200, 200),
+                              (SCREEN_SIZE[0]-210, SCREEN_SIZE[1]//2-300))
+
+    # jietu button
+    jietu_button = ImgButton('lib/lib_img/jietu.png', 'lib/lib_img/jietu.png', (200, 200),
+                             (SCREEN_SIZE[0]-210, SCREEN_SIZE[1]//2-600))
+    jietu_img = None
+    jietu_space_time = 2  # 每次截图间隔2s
+    jietu_time = 0
+    jietu_flag = False
+    share = pygame.image.load('lib/lib_img/share.jpeg')
+    share_pos = (int(SCREEN_SIZE[0]-share.get_width())//2, SCREEN_SIZE[1]-400)
+
     # painting
     paint = pygame.image.load('lib/lib_img/paint.jpeg')
     rate = SCREEN_SIZE[0]*0.9/paint.get_width()
