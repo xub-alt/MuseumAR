@@ -9,7 +9,7 @@ from yolo_utils.datasets import letterbox
 import json
 
 device = 'cpu'
-conf_thres = 0.3
+conf_thres = 0.2
 iou_thres = 0.45
 classes = None
 agnostic_nms = False
@@ -47,7 +47,7 @@ def server():
     model = attempt_load(model_path, map_location=device)
     names = model.module.names if hasattr(model, 'module') else model.names  # get class names
     stride = int(model.stride.max())
-
+    print("wait for connection")
     address = ('0.0.0.0', 8000)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # 将套接字绑定到地址, 在AF_INET下,以元组（host,port）的形式表示地址.
@@ -74,7 +74,12 @@ def server():
                     det[:, :4] = scale_coords(img.shape[2:], det[:, :4], img0.shape).round()
                     for *xyxy, conf, cls in reversed(det):
                         # json 不能处理tensor，接收端会报错，必须.item()
-                        result.append([names[int(cls)], [xyxy[i].item() for i in range(4)]])
+                        if names[int(cls)] != 'hand' and conf < 0.4:
+                            continue
+                        elif names[int(cls)] == 'pipa' and conf < 0.6:
+                            continue
+                        else:
+                            result.append([names[int(cls)], [xyxy[i].item() for i in range(4)], conf.item()])
             print(result)
             conn.send(json.dumps(result).encode('utf-8'))
 

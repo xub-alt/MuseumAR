@@ -13,6 +13,7 @@ import numpy as np
 import json
 
 CAP = 1
+FLIP = False
 
 
 # 场景
@@ -409,6 +410,9 @@ def game(info_q):
                     danmu_button.show_flag = not danmu_button.show_flag
                 if event.key == K_p:
                     paint_flag = not paint_flag
+                    if not paint_flag:
+                        butterfly.reset()
+
                     music_jieshuo = not music_jieshuo
                     if music_jieshuo:
                         music_play = True
@@ -425,7 +429,8 @@ def game(info_q):
 
         # get capture
         ret, frame = cap.read()
-        frame = cv.flip(frame, 1)
+        if FLIP:
+            frame = cv.flip(frame, 1)
         frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
         frame = cv.transpose(frame)
 
@@ -770,8 +775,6 @@ def game(info_q):
                     screen.blit(paint, paint_pos)
                     if hand.pos is not None:
                         butterfly.update_follow(hand.pos)
-                    else:
-                        butterfly.reset()
                     butterfly.show(screen)
 
                 elif sushadanyi.flag:
@@ -968,7 +971,8 @@ def send_img_process(info_q):
     cap = cv.VideoCapture(CAP)
     while True:
         ret, frame = cap.read()
-        frame = cv.flip(frame, 1)
+        if FLIP:
+            frame = cv.flip(frame, 1)
         imgencode = cv.imencode('.jpg', frame)[1]
         data = np.array(imgencode)
         # 将numpy矩阵转换成字符形式，以便在网络中传输
