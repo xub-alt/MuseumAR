@@ -21,8 +21,12 @@ def game(info_q):
     pygame.event.set_grab(True)
     # video cap setting
 
-    pygame.mixer.music.load('lib/lib_music/pipa.wav')
+    music_play = False
     music_flag = False
+    music_pipa = False
+    music_pipa_load = False
+    music_jieshuo = False
+    music_jieshuo_load = False
 
     cap = cv.VideoCapture(0)
     SCREEN_SIZE = (2560, 1600)
@@ -399,8 +403,19 @@ def game(info_q):
                     danmu_button.show_flag = not danmu_button.show_flag
                 if event.key == K_p:
                     paint_flag = not paint_flag
+                    music_jieshuo = not music_jieshuo
+                    if music_jieshuo:
+                        music_play = True
+                        music_flag = False
+                    else:
+                        music_play = False
                 if event.key == K_m:
-                    music_flag = not music_flag
+                    music_pipa = not music_pipa
+                    if music_pipa:
+                        music_play = True
+                        music_flag = False
+                    else:
+                        music_play = False
 
         # get capture
         ret, frame = cap.read()
@@ -890,8 +905,23 @@ def game(info_q):
                 jietu_flag = False
 
         # play music
-        if music_flag:
-            pygame.mixer.music.play()
+        if music_pipa:
+            if not music_pipa_load:
+                pygame.mixer.music.load('lib/lib_music/pipa.wav')
+            music_pipa_load = True
+            music_jieshuo_load = False
+        elif music_jieshuo:
+            if not music_jieshuo_load:
+                pygame.mixer.music.load('lib/lib_music/paint_jieshuo.wav')
+            music_jieshuo_load = True
+            music_pipa_load = False
+
+        if music_play:
+            if not music_flag:
+                pygame.mixer.music.play()
+                music_flag = True
+        else:
+            pygame.mixer.music.stop()
 
         # blit mouse
         x_mouse, y_mouse = pygame.mouse.get_pos()
